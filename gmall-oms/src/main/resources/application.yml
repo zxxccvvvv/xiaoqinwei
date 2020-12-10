@@ -1,0 +1,51 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.47.128:3306/guli_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+  redis:
+    host: 192.168.47.128
+  rabbitmq:
+    host: 192.168.47.128
+    virtual-host: /vh
+    username: admin
+    password: admin
+    listener:
+      simple:
+        prefetch: 1
+        acknowledge-mode: manual
+        concurrency: 4
+    publisher-confirm-type: correlated
+    publisher-returns: true
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+feign:
+  sentinel:
+    enabled: true
+mybatis-plus:
+  mapper-locations: classpath:mapper/oms/**/*.xml
+  type-aliases-package: com.atguigu.gmall.oms.entity
+  global-config:
+    db-config:
+      id-type: auto
+
+threadPool:
+  coreSize: 100
+  maxSize: 500
+  keepAlive: 60
+  blockingSize: 10000

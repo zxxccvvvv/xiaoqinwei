@@ -1,0 +1,19 @@
+server:
+  port: 18084
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+  mapper-locations: classpath:mapper/ums/*.xml
+  type-aliases-package: com.atguigu.gmall.ums.entity
+
+
+feign:
+  sentinel:
+    enabled: true
+
+logging:
+  level:
+    com.atguigu.gmall: debug

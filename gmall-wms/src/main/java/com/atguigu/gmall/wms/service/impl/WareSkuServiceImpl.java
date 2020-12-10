@@ -1,0 +1,95 @@
+package com.atguigu.gmall.wms.service.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.common.exception.OrderException;
+import com.atguigu.gmall.wms.entity.WareSkuEntity;
+import com.atguigu.gmall.wms.mapper.WareSkuMapper;
+import com.atguigu.gmall.wms.service.WareSkuService;
+import com.atguigu.gmall.wms.vo.SkuLockVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+@Service("wareSkuService")
+public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSkuEntity> implements WareSkuService {
+
+    @Autowired
+    private WareSkuMapper wareSkuMapper;
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    private static final String KEY_PREFIX = "stock:lock:";
+    @Override
+    public PageResultVo queryPage(PageParamVo paramVo) {
+        IPage<WareSkuEntity> page = this.page(
+                paramVo.getPage(),
+                new QueryWrapper<WareSkuEntity>()
+        );
+
+        return new PageResultVo(page);
+    }
+
+    @Override
+    public List<SkuLockVo> checkAndLock(List<SkuLockVo> lockVos, String orderToken) {
+        if (CollectionUtils.isEmpty(lockVos)){
+            throw new OrderException("没有要购买的商品");
+        }
+        //一定要一次次性遍历所有清单，保证原子性
+        lockVos.forEach(lockVo -> {
+            checkLock(lockVo);
+        });
+
+        //只要一个商品锁定失败，就要把所有有锁定成功的商品解锁库存
+        if (lockVos.stream().anyMatch(lockVo -> !lockVo.getLock())){
+            List<SkuLockVo> successLockVos = lockVos.stream().filter(SkuLockVo::getLock).collect(Collectors.toList());
+            successLockVos.forEach(lockVo -> {
+                wareSkuMapper.unlock(lockVo.getWareSkuId(), lockVo.getCount());
+            });
+            return lockVos;
+        }
+
+        //为了方便将来减库存或者解锁库存，需要把该订单对应的锁定库存信息缓存到redis中
+        redisTemplate.opsForValue().set(KEY_PREFIX + orderToken, JSON.toJSONString(lockVos));
+
+        //如果都锁定成功则返回null
+        return null;
+    }
+
+    private void checkLock(SkuLockVo lockVo){
+        RLock fairLock = redissonClient.getFairLock("stock:" + lockVo.getSkuId());
+        fairLock.lock();
+        //1.查询库存信息
+        List<WareSkuEntity> wareSkuEntities = wareSkuMapper.checkLock(lockVo.getSkuId(), lockVo.getCount());
+        if (CollectionUtils.isEmpty(wareSkuEntities)){
+            lockVo.setLock(false);
+            fairLock.unlock();
+            return;
+        }
+
+        //2.锁定库存信息：
+        WareSkuEntity wareSkuEntity = wareSkuEntities.get(0);
+        if (wareSkuMapper.lock(wareSkuEntity.getId(), lockVo.getCount()) == 1){
+            lockVo.setLock(true);
+            lockVo.setWareSkuId(wareSkuEntity.getId());
+        }
+        fairLock.unlock();
+
+    }
+
+}
