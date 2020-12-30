@@ -4,6 +4,7 @@ import com.atguigu.gmall.cart.interceptor.LoginInterceptor;
 import com.atguigu.gmall.cart.pojo.Cart;
 import com.atguigu.gmall.cart.service.CartService;
 import com.atguigu.gmall.common.bean.ResponseVo;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,7 @@ public class CartController {
     @ResponseBody
     public ResponseVo<List<Cart>> queryCheckedCartsByUserId(@PathVariable("userId")Long userId){
         List<Cart> cartList = cartService.queryCheckedCartsByUserId(userId);
-        System.out.println("dev分支第一次提交");
-        System.out.println("test分支第一次提交");
+        System.out.println("dev分支");
         return ResponseVo.ok(cartList);
 
     }
