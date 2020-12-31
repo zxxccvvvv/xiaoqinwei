@@ -50,6 +50,12 @@ public class CartService {
 
     //cart中有skuId, count
     public void addCart(Cart cart) {
+        
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        
+        
+        
         //获取登录信息，如果userId不为空，就以userId作为key,如果为空则以userKey作为key
         String userId = getUserId();
         //通过外层Key获取内层map结构
@@ -66,6 +72,7 @@ public class CartService {
             hashOps.put(skuId, JSON.toJSONString(cart));
             //写mysql
             cartAsyncService.updateCartToMysql(userId, cart);
+            
 
         }else {
             //不存在保存到数据库
@@ -108,6 +115,11 @@ public class CartService {
     }
 
     private String getUserId() {
+        
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
         UserInfo userInfo = LoginInterceptor.getUserInfo();
         if (userInfo.getUserId() == null){
             return userInfo.getUserKey();
@@ -130,6 +142,11 @@ public class CartService {
 
 
     public List<Cart> queryCarts() {
+        
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
         //1.获取userKey
         UserInfo userInfo = LoginInterceptor.getUserInfo();
         String userKey = userInfo.getUserKey();
@@ -182,6 +199,11 @@ public class CartService {
 
         //7.查询登陆状态的购物车并返回
         List<Object> loginCartJson = loginHashOps.values();
+        
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
         if (!CollectionUtils.isEmpty(loginCartJson)){
             return loginCartJson.stream().map(cartJson -> {
                 Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
