@@ -78,9 +78,7 @@ public class CartController {
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
         model.addAttribute("cart", cart);
-        
-        
-        
+
         System.out.println("<<---------------------->>");
 
 
@@ -107,6 +105,8 @@ public class CartController {
         cartService.updateNum(cart);
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
+
+
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
 

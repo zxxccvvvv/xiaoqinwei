@@ -50,6 +50,13 @@ public class CartService {
 
     //cart中有skuId, count
     public void addCart(Cart cart) {
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         //获取登录信息，如果userId不为空，就以userId作为key,如果为空则以userKey作为key
         String userId = getUserId();
         //通过外层Key获取内层map结构
@@ -108,6 +115,14 @@ public class CartService {
     }
 
     private String getUserId() {
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+
+
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         UserInfo userInfo = LoginInterceptor.getUserInfo();
         if (userInfo.getUserId() == null){
             return userInfo.getUserKey();
@@ -116,6 +131,11 @@ public class CartService {
     }
 
     public Cart queryCartBySkuId(Long skuId) {
+
+
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         String userId = getUserId();
 
         //获取redis中的map
@@ -130,6 +150,10 @@ public class CartService {
 
 
     public List<Cart> queryCarts() {
+
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         //1.获取userKey
         UserInfo userInfo = LoginInterceptor.getUserInfo();
         String userKey = userInfo.getUserKey();
@@ -194,6 +218,9 @@ public class CartService {
     }
 
     public void updateNum(Cart cart) {
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         String userId = getUserId();
         BoundHashOperations<String, Object, Object> hashOps = redisTemplate.boundHashOps(KEY_PREFIX + userId);
         if (hashOps.hasKey(cart.getSkuId().toString())){
@@ -232,6 +259,10 @@ public class CartService {
     }
 
     public void updateStatus(Cart cart) {
+
+
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         String skuId = cart.getSkuId().toString();
         Boolean check = cart.getCheck();
 
