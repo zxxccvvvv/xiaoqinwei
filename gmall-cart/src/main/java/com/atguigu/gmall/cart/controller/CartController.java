@@ -39,11 +39,7 @@ public class CartController {
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
+
         cartService.updateStatus(cart);
         return ResponseVo.ok();
     }
@@ -59,9 +55,8 @@ public class CartController {
             System.out.println("<<---------------------->>");
             System.out.println("<<---------------------->>");
             System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
+
+
             throw new RuntimeException("没有选择添加到购物车的商品信息");
 
         }
@@ -79,9 +74,8 @@ public class CartController {
         System.out.println("<<---------------------->>");
         model.addAttribute("cart", cart);
         System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
+
+
         return "addCart";
     }
 
@@ -106,9 +100,8 @@ public class CartController {
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
 
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
-        System.out.println("<<---------------------->>");
+
+
         return ResponseVo.ok();
     }
 
