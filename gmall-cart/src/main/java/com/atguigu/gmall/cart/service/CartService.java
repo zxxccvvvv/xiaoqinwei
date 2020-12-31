@@ -52,6 +52,12 @@ public class CartService {
     public void addCart(Cart cart) {
 
         System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+
+
+
+
+        System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
 
 
@@ -73,6 +79,7 @@ public class CartService {
             hashOps.put(skuId, JSON.toJSONString(cart));
             //写mysql
             cartAsyncService.updateCartToMysql(userId, cart);
+
 
         }else {
             //不存在保存到数据库
@@ -117,6 +124,11 @@ public class CartService {
     private String getUserId() {
 
         System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+
+        System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
 
 
@@ -150,6 +162,11 @@ public class CartService {
 
 
     public List<Cart> queryCarts() {
+
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
 
 
         System.out.println("<<---------------------->>");
@@ -206,6 +223,11 @@ public class CartService {
 
         //7.查询登陆状态的购物车并返回
         List<Object> loginCartJson = loginHashOps.values();
+
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
         if (!CollectionUtils.isEmpty(loginCartJson)){
             return loginCartJson.stream().map(cartJson -> {
                 Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
