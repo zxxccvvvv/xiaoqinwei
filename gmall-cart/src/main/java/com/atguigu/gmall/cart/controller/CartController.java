@@ -24,6 +24,8 @@ public class CartController {
     public ResponseVo<List<Cart>> queryCheckedCartsByUserId(@PathVariable("userId")Long userId){
         List<Cart> cartList = cartService.queryCheckedCartsByUserId(userId);
         System.out.println("dev分支");
+        System.out.println("dev1分支");
+        System.out.println("dev2分支");
         return ResponseVo.ok(cartList);
 
     }
