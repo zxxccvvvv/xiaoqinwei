@@ -40,6 +40,10 @@ public class CartController {
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         cartService.updateStatus(cart);
         return ResponseVo.ok();
     }
@@ -54,6 +58,10 @@ public class CartController {
             System.out.println("<<---------------------->>");
             System.out.println("<<---------------------->>");
             System.out.println("<<---------------------->>");
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
             throw new RuntimeException("没有选择添加到购物车的商品信息");
 
         }
@@ -70,6 +78,10 @@ public class CartController {
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
         model.addAttribute("cart", cart);
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         return "addCart";
     }
 
@@ -89,6 +101,10 @@ public class CartController {
     @ResponseBody
     public ResponseVo updateNum(@RequestBody Cart cart){
         cartService.updateNum(cart);
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
 
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
@@ -99,6 +115,10 @@ public class CartController {
     @PostMapping("deleteCart")
     @ResponseBody
     public ResponseVo deleteCart(@RequestParam("skuId")Long skuId){
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         cartService.deleteCart(skuId);
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
@@ -111,6 +131,10 @@ public class CartController {
     @GetMapping("test")
     @ResponseBody
     public String test(){
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         System.out.println(LoginInterceptor.getUserInfo());
         System.out.println("<<---------------------->>");
         System.out.println("<<---------------------->>");
