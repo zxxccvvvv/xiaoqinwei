@@ -35,6 +35,10 @@ public class CartController {
     @PostMapping("updateStatus")
     @ResponseBody
     public ResponseVo updateStatus(@RequestBody Cart cart){
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         cartService.updateStatus(cart);
         return ResponseVo.ok();
     }
@@ -43,6 +47,10 @@ public class CartController {
     @GetMapping()
     public String addCart(Cart cart){
         if (cart == null || cart.getSkuId() == null){
+            System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
             throw new RuntimeException("没有选择添加到购物车的商品信息");
 
         }
@@ -56,6 +64,10 @@ public class CartController {
     public String queryCart(@RequestParam("skuId")Long skuId, Model model){
         Cart cart = cartService.queryCartBySkuId(skuId);
         model.addAttribute("cart", cart);
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         return "addCart";
     }
 
@@ -73,12 +85,20 @@ public class CartController {
     @ResponseBody
     public ResponseVo updateNum(@RequestBody Cart cart){
         cartService.updateNum(cart);
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         return ResponseVo.ok();
     }
 
     @PostMapping("deleteCart")
     @ResponseBody
     public ResponseVo deleteCart(@RequestParam("skuId")Long skuId){
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         cartService.deleteCart(skuId);
         return ResponseVo.ok();
     }
@@ -87,6 +107,10 @@ public class CartController {
     @GetMapping("test")
     @ResponseBody
     public String test(){
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
+        System.out.println("<<---------------------->>");
         System.out.println(LoginInterceptor.getUserInfo());
         return "hello cart";
     }
